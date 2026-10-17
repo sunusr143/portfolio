@@ -36,6 +36,8 @@ Open `content/projects.ts`, copy the commented template at the bottom of the `pr
 
 ## Inquiry form delivery
 
+**Quickest free setup (no domain):** get a free access key at [web3forms.com](https://web3forms.com) and set `WEB3FORMS_ACCESS_KEY`. Inquiries are emailed to the address you registered. Only name, email and a short message are required from visitors.
+
 `POST /api/inquiry` validates input (zod), applies a honeypot, a best-effort rate limit and optional Cloudflare Turnstile, then sends email through [Resend](https://resend.com).
 
 1. Create a Resend account and verify a sending domain.

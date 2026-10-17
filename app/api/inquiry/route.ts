@@ -78,16 +78,17 @@ export async function POST(req: Request) {
   const from = process.env.INQUIRY_FROM_EMAIL;
   const to = process.env.INQUIRY_TO_EMAIL;
   const webhook = process.env.INQUIRY_WEBHOOK_URL;
+  const web3formsKey = process.env.WEB3FORMS_ACCESS_KEY;
   const emailConfigured = Boolean(apiKey && from && to);
 
   const rows: [string, string][] = [
     ["Type", d.kind === "discovery" ? "Discovery call request" : "Project inquiry"],
     ["Name", d.name],
     ["Email", d.email],
-    ["Company", d.company],
-    ["Project type", d.projectType],
+    ["Company", d.company || "Not provided"],
+    ["Project type", d.projectType || "Not specified"],
     ["Current challenge", d.challenge],
-    ["Expected deliverables", d.deliverables],
+    ["Expected deliverables", d.deliverables || "Not provided"],
     ["Budget", d.budget || "Not provided"],
     ["Start date", d.startDate || "Not provided"],
     ["Details", d.details || "None"],
@@ -110,7 +111,7 @@ export async function POST(req: Request) {
           from,
           to: [to],
           reply_to: d.email,
-          subject: `[Portfolio] ${d.kind === "discovery" ? "Discovery call" : "Inquiry"}: ${oneLine(d.projectType)} from ${oneLine(d.name)}`,
+          subject: `[Portfolio] ${d.kind === "discovery" ? "Discovery call" : "Inquiry"}: ${oneLine(d.projectType || "General")} from ${oneLine(d.name)}`,
           html,
           text,
         }),
@@ -137,6 +138,30 @@ export async function POST(req: Request) {
     }
   }
 
+  // Web3Forms: free, emails the inquiry to the address registered with the key. No domain needed.
+  if (web3formsKey) {
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: web3formsKey,
+          subject: `[Portfolio] ${d.kind === "discovery" ? "Discovery call" : "Inquiry"} from ${oneLine(d.name)}`,
+          name: d.name,
+          email: d.email,
+          message: text,
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { success?: boolean };
+      if (res.ok && data.success) delivered = true;
+      else console.error("Web3Forms delivery failed", res.status);
+    } catch (err) {
+      console.error("Web3Forms request error", err);
+    }
+  }
+
+  // The local file fallback only works on a writable disk. Serverless hosts (e.g. Vercel) are read-only,
+  // so there it fails and the visitor is shown the direct-email fallback instead of a false success.
   if (!delivered) {
     try {
       const dir = path.join(process.cwd(), "data");
@@ -149,6 +174,9 @@ export async function POST(req: Request) {
     }
   }
 
+  if (!delivered && !emailConfigured && !webhook && !web3formsKey) {
+    return json({ ok: false, code: "not_configured", message: "The form is not set up to deliver messages yet. Please email me directly." }, 503);
+  }
   if (!delivered) {
     return json({ ok: false, code: "delivery_failed", message: "Your message could not be delivered. Please email me directly." }, 502);
   }

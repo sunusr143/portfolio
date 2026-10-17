@@ -154,28 +154,25 @@ export function InquiryForm() {
         <Field id="name" label="Name" error={errors.name}>
           <input id="name" name="name" autoComplete="name" required className="field" {...inv("name")} />
         </Field>
-        <Field id="email" label="Work email" error={errors.email}>
+        <Field id="email" label="Email" error={errors.email}>
           <input id="email" name="email" type="email" autoComplete="email" required className="field" {...inv("email")} />
         </Field>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field id="company" label="Company or organization" error={errors.company}>
-          <input id="company" name="company" autoComplete="organization" required className="field" {...inv("company")} />
+        <Field id="company" label="Company or organization" optional error={errors.company}>
+          <input id="company" name="company" autoComplete="organization" className="field" {...inv("company")} />
         </Field>
-        <Field id="projectType" label="Project type" error={errors.projectType}>
-          <select id="projectType" name="projectType" required defaultValue={initialType} className="field" {...inv("projectType")}>
-            <option value="" disabled>Choose one</option>
+        <Field id="projectType" label="Project type" optional error={errors.projectType}>
+          <select id="projectType" name="projectType" defaultValue={initialType} className="field" {...inv("projectType")}>
+            <option value="">Not sure yet</option>
             {projectTypes.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
         </Field>
       </div>
 
-      <Field id="challenge" label="Current challenge" error={errors.challenge} hint="What is going wrong or slowing you down? No credentials or secrets, please.">
+      <Field id="challenge" label="How can I help?" error={errors.challenge} hint="A sentence or two is plenty. No credentials or secrets, please.">
         <textarea id="challenge" name="challenge" rows={4} required className="field" {...inv("challenge")} />
-      </Field>
-      <Field id="deliverables" label="Expected deliverables" error={errors.deliverables}>
-        <textarea id="deliverables" name="deliverables" rows={3} required className="field" {...inv("deliverables")} />
       </Field>
 
       <div className="grid gap-5 sm:grid-cols-2">
