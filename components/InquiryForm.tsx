@@ -155,10 +155,17 @@ export function InquiryForm() {
           <input id="name" name="name" autoComplete="name" required className="field" {...inv("name")} />
         </Field>
         <Field id="email" label="Email" error={errors.email}>
-          <input id="email" name="email" type="email" autoComplete="email" required className="field" {...inv("email")} />
+          <input id="email" name="email" type="email" inputMode="email" autoCapitalize="none" autoComplete="email" required className="field" {...inv("email")} />
         </Field>
       </div>
 
+      <Field id="challenge" label="How can I help?" error={errors.challenge} hint="A sentence or two is plenty. No credentials or secrets, please.">
+        <textarea id="challenge" name="challenge" rows={4} required className="field" {...inv("challenge")} />
+      </Field>
+
+      <details className="group rounded-lg border border-signal/20 p-4" open={Boolean(initialType)}>
+        <summary className="cursor-pointer text-sm font-medium text-mist-300 marker:text-signal-strong">More details <span className="font-normal text-mist-500">(optional)</span></summary>
+        <div className="mt-5 space-y-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="company" label="Company or organization" optional error={errors.company}>
           <input id="company" name="company" autoComplete="organization" className="field" {...inv("company")} />
@@ -170,10 +177,6 @@ export function InquiryForm() {
           </select>
         </Field>
       </div>
-
-      <Field id="challenge" label="How can I help?" error={errors.challenge} hint="A sentence or two is plenty. No credentials or secrets, please.">
-        <textarea id="challenge" name="challenge" rows={4} required className="field" {...inv("challenge")} />
-      </Field>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="budget" label="Estimated budget" optional error={errors.budget}>
@@ -190,6 +193,9 @@ export function InquiryForm() {
       <Field id="details" label="Additional details" optional error={errors.details}>
         <textarea id="details" name="details" rows={3} className="field" />
       </Field>
+
+        </div>
+      </details>
 
       {/* Honeypot: hidden from people and assistive tech; bots tend to fill it. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">

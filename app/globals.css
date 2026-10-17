@@ -94,3 +94,6 @@ body {
 
 /* Gradient accent for the hero headline's second line. */
 .text-gradient { background: linear-gradient(90deg, #2f78ff, #7b5cff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Decorative glows must never create sideways scroll on phones. */
+html, body { overflow-x: clip; }

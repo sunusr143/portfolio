@@ -38,17 +38,17 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-signal/20 bg-ink-950/90 backdrop-blur">
-      <div className="container-page flex h-16 items-center justify-between gap-6">
-        <Link href="/" className="group flex items-center gap-3 leading-tight" aria-label="Sunu Mohan, home">
+      <div className="container-page flex h-16 items-center justify-between gap-3 sm:gap-6">
+        <Link href="/" className="group flex min-w-0 items-center gap-2.5 leading-tight sm:gap-3" aria-label="Sunu Mohan, home">
           <span
             aria-hidden="true"
-            className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-signal to-violet text-base font-bold tracking-tight text-white shadow-glow transition-transform group-hover:scale-105"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-signal to-violet text-base font-bold tracking-tight text-white shadow-glow transition-transform group-hover:scale-105"
           >
             SM
           </span>
-          <span>
-            <span className="block text-lg font-semibold tracking-tight text-white">Sunu Mohan</span>
-            <span className="block whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-signal-strong sm:text-[11px]">{site.headerTitle}</span>
+          <span className="min-w-0">
+            <span className="block truncate text-lg font-semibold tracking-tight text-white">Sunu Mohan</span>
+            <span className="block truncate whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-signal-strong sm:text-[11px]">{site.headerTitle}</span>
           </span>
         </Link>
 
@@ -68,7 +68,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <button
             type="button"
             onClick={() => window.dispatchEvent(new Event("open-palette"))}
