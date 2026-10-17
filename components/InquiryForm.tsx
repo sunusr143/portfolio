@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { projectTypes, budgetRanges, type InquiryResponse } from "@/lib/inquiry";
+import { projectTypes, budgetRanges, inquirySchema, type InquiryResponse } from "@/lib/inquiry";
 import { site } from "@/content/site";
 
 declare global {
@@ -101,19 +101,60 @@ export function InquiryForm() {
       return;
     }
 
+    // Validate in the browser first so people get instant, field-level feedback.
+    if (payload.website) { setStatus("success"); form.reset(); return; } // honeypot: pretend success
+    const parsed = inquirySchema.safeParse(payload);
+    if (!parsed.success) {
+      const fieldErrors: Record<string, string> = {};
+      for (const issue of parsed.error.issues) {
+        const key = String(issue.path[0] ?? "form");
+        if (!fieldErrors[key]) fieldErrors[key] = issue.message;
+      }
+      setErrors(fieldErrors);
+      setMessage("Please fix the highlighted fields.");
+      setStatus("error");
+      return;
+    }
+
     setStatus("submitting");
     setErrors({});
     setMessage("");
     try {
-      const res = await fetch("/api/inquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
-      const data = (await res.json()) as InquiryResponse;
-      if (data.ok) {
+      let ok = false;
+      let failMessage = "";
+      if (site.web3formsKey) {
+        // Free Web3Forms plans accept browser submissions only, so this goes straight to them.
+        const d = parsed.data;
+        const text = ["kind", "name", "email", "company", "projectType", "challenge", "budget", "startDate", "details"]
+          .map((k) => [k, (d as Record<string, unknown>)[k]] as const)
+          .filter(([, v]) => v)
+          .map(([k, v]) => `${k}: ${v}`)
+          .join("\n\n");
+        // Plain FormData (no custom headers) is a "simple" request, so the browser skips the CORS preflight.
+        const fields = new FormData();
+        fields.append("access_key", site.web3formsKey);
+        fields.append("subject", `[Portfolio] ${d.kind === "discovery" ? "Discovery call" : "Inquiry"} from ${d.name}`);
+        fields.append("from_name", d.name);
+        fields.append("name", d.name);
+        fields.append("email", d.email);
+        fields.append("message", text);
+        fields.append("botcheck", "");
+        const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: fields });
+        const data = (await res.json().catch(() => ({}))) as { success?: boolean; message?: string };
+        ok = res.ok && data.success === true;
+        if (!ok) failMessage = "Your message could not be delivered. Please email me directly.";
+      } else {
+        const res = await fetch("/api/inquiry", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        const data = (await res.json()) as InquiryResponse;
+        ok = data.ok;
+        if (!data.ok) { setErrors(data.fieldErrors ?? {}); failMessage = data.message; }
+      }
+      if (ok) {
         setStatus("success");
         form.reset();
         return;
       }
-      setErrors(data.fieldErrors ?? {});
-      setMessage(data.message);
+      setMessage(failMessage);
       setStatus("error");
     } catch {
       setMessage("Network error. Check your connection and try again, or email me directly.");

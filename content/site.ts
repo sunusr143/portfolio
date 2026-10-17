@@ -11,6 +11,11 @@ export const site = {
   yearsExperience: 13,
   /** Used for every mailto link and the structured data. Put your dedicated freelance address here. */
   email: "sunuremote@gmail.com",
+  /**
+   * Web3Forms access key. It is public by design (it only lets forms email YOU), so it is safe in browser code.
+   * Free plans only accept submissions sent from the visitor's browser, which is how the inquiry form uses it.
+   */
+  web3formsKey: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "9010580f-9b7c-444b-89af-6151aedad27c",
   linkedin: "https://www.linkedin.com/in/sunu-mohan/",
   description:
     "Independent AWS DevOps consultant for EKS, Terraform, CI/CD and DevSecOps. 13 years building, securing and automating production cloud platforms.",
