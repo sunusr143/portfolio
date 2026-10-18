@@ -39,16 +39,16 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-signal/20 bg-ink-950/90 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between gap-3 sm:gap-6">
-        <Link href="/" className="group flex min-w-0 items-center gap-2.5 leading-tight sm:gap-3" aria-label="Sunu Mohan, home">
+        <Link href="/" className="group flex min-w-0 items-center gap-2.5 leading-tight sm:gap-3 lg:shrink-0" aria-label="Sunu Mohan, home">
           <span
             aria-hidden="true"
             className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-signal to-violet text-base font-bold tracking-tight text-white shadow-glow transition-transform group-hover:scale-105"
           >
             SM
           </span>
-          <span className="min-w-0">
+          <span className="min-w-0 lg:min-w-fit">
             <span className="block truncate text-lg font-semibold tracking-tight text-white">Sunu Mohan</span>
-            <span className="block truncate whitespace-nowrap font-mono text-[10px] uppercase tracking-wide text-signal-strong sm:text-[11px]">{site.headerTitle}</span>
+            <span className="block truncate whitespace-nowrap lg:overflow-visible font-mono text-[10px] uppercase tracking-wide text-signal-strong sm:text-[11px]">{site.headerTitle}</span>
           </span>
         </Link>
 

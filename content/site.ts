@@ -4,10 +4,10 @@
  */
 export const site = {
   name: "Sunu Mohan",
-  title: "Staff DevOps & AI Engineer | Cloud Platform, DevSecOps & AI Automation",
-  shortTitle: "Staff DevOps & AI Engineer",
+  title: "Staff DevOps & Cloud Engineer | AWS, Kubernetes, Terraform & Platform Automation",
+  shortTitle: "Staff DevOps & Cloud Engineer",
   /** Compact one-line label for the header logo. */
-  headerTitle: "Staff Engineer | DevOps / AI",
+  headerTitle: "Staff Engineer | DevOps / Cloud",
   yearsExperience: 13,
   /** Used for every mailto link and the structured data. Put your dedicated freelance address here. */
   email: "sunuremote@gmail.com",
@@ -17,8 +17,11 @@ export const site = {
    */
   web3formsKey: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "9010580f-9b7c-444b-89af-6151aedad27c",
   linkedin: "https://www.linkedin.com/in/sunu-mohan/",
+  /** SEO meta description and social preview text. */
   description:
-    "Independent AWS DevOps consultant for EKS, Terraform, CI/CD and DevSecOps. 13 years building, securing and automating production cloud platforms.",
+    "Explore Sunu Mohan's DevOps and cloud engineering portfolio featuring AWS, Kubernetes, Terraform, CI/CD automation, cloud security, and platform engineering projects.",
+  /** Browser tab / search result title for the home page. */
+  seoTitle: "Sunu Mohan | DevOps, AWS, Kubernetes & Platform Engineering",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 
   /** Availability is configurable. Set status to "unavailable" to change the banner. */
@@ -34,15 +37,13 @@ export const site = {
 
   headline: "I Build Scalable, Automated & Secure Cloud Infrastructure",
   /** Hero headline lines; the second line is rendered with the gradient accent. */
-  headlineLines: ["I Build Scalable,", "Automated & Secure", "Cloud Infrastructure"],
-  heroEyebrow: "Staff DevOps & AI Engineer | Cloud Platform, DevSecOps & AI Automation",
+  headlineLines: ["Staff DevOps & Cloud Engineer", "AWS, Kubernetes, Terraform", "& Platform Automation"],
+  heroEyebrow: "13 years in cloud and platform engineering",
 
   /** Optional. Put a photo in /public (e.g. "/sunu.jpg") to show it in the About strip. Initials show if unset. */
   photo: undefined as string | undefined,
   /** GitHub username (CONFIRM THIS). Set to "" to hide every GitHub link and the repositories section. */
   githubUser: "sunusr143",
-  /** Repo names to hide from the "On GitHub" section (your profile repo is always hidden). */
-  githubExclude: ["Detect-FakeProfile", "java_test_devops", "dha-mock-exam-platform", "Tree_view"],
   get github() { return this.githubUser ? `https://github.com/${this.githubUser}` : undefined; },
 
   /** Tools shown in the home page strip. Only tools you have actually used. */
@@ -61,7 +62,7 @@ export const site = {
     { label: "Grafana", icon: "grafana", mono: "Gf", color: "#f46800" },
   ],
   subheadline:
-    "Staff DevOps & AI Engineer with 13 years of experience building AWS infrastructure, Kubernetes platforms, automated delivery pipelines, cloud security solutions and AI-assisted automation.",
+    "I design, automate, and secure cloud infrastructure and delivery platforms, helping engineering teams ship reliable software through infrastructure as code, CI/CD, Kubernetes, and cloud-native security.",
 
   expertiseStrip: ["AWS", "Amazon EKS", "Terraform", "CI/CD", "DevSecOps", "AI-driven cloud governance"],
 

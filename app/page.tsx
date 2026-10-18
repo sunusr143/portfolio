@@ -27,24 +27,27 @@ export default function HomePage() {
     <>
       <section className="relative isolate pb-10 pt-12 sm:pt-16 lg:pb-14">
         <HeroBackdrop />
-        <div className="container-page grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+        <div className="container-page grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
           <div>
             <AvailabilityBadge />
             <p className="mt-6 text-sm font-medium tracking-wide text-signal-strong">{site.heroEyebrow}</p>
-            <h1 className="mt-3 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl xl:text-6xl">
+            <h1 className="mt-3 text-[2rem] font-bold leading-[1.12] tracking-tight sm:text-4xl xl:text-[2.6rem]">
               <span className="block">{l1}</span>
               <span className="text-gradient block">{l2}</span>
               <span className="block">{l3}</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist-300">{site.subheadline}</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/work-with-me#inquiry" className="btn-primary">Discuss Your Project</Link>
-              <Link href="/projects" className="btn-ghost">Explore My Work</Link>
+              <Link href="/projects" className="btn-primary">View Projects</Link>
+              <Link href="/work-with-me#inquiry" className="btn-ghost">Contact Me</Link>
               {site.github && (
                 <a href={site.github} target="_blank" rel="noopener noreferrer" className="btn-ghost">
-                  <Icon name="github" className="h-4 w-4" />View GitHub
+                  <Icon name="github" className="h-4 w-4" />GitHub
                 </a>
               )}
+              <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+                <Icon name="linkedin" className="h-4 w-4" />LinkedIn
+              </a>
             </div>
             <HeroTerminal />
           </div>

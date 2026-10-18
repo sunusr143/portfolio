@@ -18,6 +18,13 @@ export function generateMetadata({ params }: Props): Metadata {
   return { title: p.title, description: p.tagline, alternates: { canonical: `/projects/${p.slug}` } };
 }
 
+const statusStyle: Record<string, string> = {
+  "Production work": "!border-ok/50 !text-ok",
+  "Open-source reference": "!border-signal/60 !text-signal-strong",
+  Prototype: "!border-warn/50 !text-warn",
+  Concept: "!border-warn/50 !text-warn",
+};
+
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-12">
@@ -62,7 +69,7 @@ export default function ProjectPage({ params }: Props) {
           <Link href="/projects" className="text-sm text-mist-300 hover:text-mist-100">&larr; All projects</Link>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">{p.title}</h1>
           <p className="mt-4 text-lg text-mist-300">{p.tagline}</p>
-          <ul className="mt-4 flex flex-wrap gap-2">{p.category.map((c) => <li key={c} className="chip">{c}</li>)}</ul>
+          <ul className="mt-4 flex flex-wrap gap-2">{p.status && <li className={`chip ${statusStyle[p.status]}`}>{p.status}</li>}{p.category.map((c) => <li key={c} className="chip">{c}</li>)}</ul>
 
           {p.image && (
             <Image src={p.image} alt={`${p.title}: block diagram`} width={1200} height={630} priority className="mt-8 h-auto w-full rounded-xl border border-signal/25" />
@@ -74,6 +81,22 @@ export default function ProjectPage({ params }: Props) {
             <ul className="list-disc space-y-2 pl-5 text-mist-300">{p.role.map((r) => <li key={r}>{r}</li>)}</ul>
           </Block>
           {p.diagram && <Block title="Architecture and workflow"><FlowDiagram diagram={p.diagram} /></Block>}
+
+          {p.workflow && p.workflow.length > 0 && (
+            <Block title="Implementation workflow">
+              <ol className="list-decimal space-y-2 pl-5 text-mist-300">{p.workflow.map((w) => <li key={w}>{w}</li>)}</ol>
+            </Block>
+          )}
+          {p.security && p.security.length > 0 && (
+            <Block title="Security and reliability">
+              <ul className="list-disc space-y-2 pl-5 text-mist-300">{p.security.map((x) => <li key={x}>{x}</li>)}</ul>
+            </Block>
+          )}
+          {p.validation && p.validation.length > 0 && (
+            <Block title="Deployment and validation">
+              <ul className="list-disc space-y-2 pl-5 text-mist-300">{p.validation.map((x) => <li key={x}>{x}</li>)}</ul>
+            </Block>
+          )}
 
           {p.decisions && (
             <Block title="Engineering decisions">

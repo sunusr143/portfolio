@@ -13,18 +13,18 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", displ
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: `${site.name} | AWS DevOps, Platform & AI Automation Consultant`, template: `%s | ${site.name}` },
+  title: { default: site.seoTitle, template: `%s | ${site.name}` },
   description: site.description,
-  keywords: ["AWS DevOps Consultant", "EKS Consultant", "Terraform Engineer", "CI/CD Consultant", "Cloud Security Automation", "DevSecOps Consultant", "AI DevOps Engineer", "AI-assisted cloud automation"],
+  keywords: ["DevOps Engineer", "Cloud Engineer", "Platform Engineer", "AWS", "Kubernetes", "Amazon EKS", "Terraform", "CI/CD", "DevSecOps", "Cloud security automation", "AI-assisted cloud automation"],
   authors: [{ name: site.name, url: site.linkedin }],
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: `${site.name} | AWS DevOps, Platform & AI Automation Consultant`,
+    title: site.seoTitle,
     description: site.description,
     url: site.url,
   },
-  twitter: { card: "summary_large_image", title: `${site.name} | Cloud Platform Consultant`, description: site.description },
+  twitter: { card: "summary_large_image", title: site.seoTitle, description: site.description },
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
 };

@@ -23,6 +23,10 @@ Requires Node 18.18+.
 | Case studies and diagrams | `content/projects.ts` |
 | Engagements (add `price` to show pricing) | `content/engagements.ts` |
 | Skills, certifications, career | `content/skills.ts` |
+| GitHub repositories shown on the home page | `content/repos.ts` (curated, enriched live from the GitHub API) |
+| Project status labels and extra case-study sections | `content/projectExtras.ts` |
+
+GitHub section: only repositories listed in `content/repos.ts` are shown. If the GitHub API is rate limited the list still renders (without live language and date) and the cause is logged. Set `GITHUB_TOKEN` (read-only, no scopes) in Vercel to avoid rate limits.
 
 Availability: set `availability.status` to `available`, `limited` or `unavailable`.
 

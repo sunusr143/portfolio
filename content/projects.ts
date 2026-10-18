@@ -1,3 +1,5 @@
+import { projectExtras, projectStatus } from "./projectExtras";
+
 /**
  * Case studies are sanitized: no account IDs, internal URLs, IPs, credentials,
  * or company-specific diagrams. Impact statements use only verifiable facts.
@@ -10,6 +12,8 @@ export type Diagram = { caption: string; lanes: DiagramLane[] };
 
 export type ProjectCategory = "Kubernetes" | "AI & Automation" | "Security" | "CI/CD" | "Jenkins" | "Terraform" | "Observability" | "Embedded & IoT";
 
+export type ProjectStatus = "Production work" | "Open-source reference" | "Prototype" | "Concept";
+
 export type Project = {
   slug: string;
   title: string;
@@ -19,6 +23,12 @@ export type Project = {
   problem: string;
   role: string[];
   diagram?: Diagram;
+  /** Production work, open-source reference, prototype or design concept. Set in projectExtras.ts. */
+  status?: ProjectStatus;
+  /** Optional recruiter-facing sections. Set in projectExtras.ts. */
+  workflow?: string[];
+  security?: string[];
+  validation?: string[];
   stack?: string[];
   decisions?: { title: string; body: string }[];
   challenges?: { challenge: string; approach: string }[];
@@ -35,7 +45,7 @@ export type Project = {
 const CONFIDENTIAL_NOTE =
   "This is a sanitized description of enterprise work. Names, identifiers and internal architecture are intentionally omitted, and the code is not open source.";
 
-export const projects: Project[] = [
+const baseProjects: Project[] = [
   {
     slug: "artifactory-eks-migration",
     title: "Enterprise Artifactory Migration to Amazon EKS",
@@ -908,6 +918,12 @@ export const projects: Project[] = [
    * },
    */
 ];
+
+export const projects: Project[] = baseProjects.map((p) => ({
+  ...p,
+  status: projectStatus[p.slug] ?? "Production work",
+  ...projectExtras[p.slug],
+}));
 
 export const projectCategories: ("All" | ProjectCategory)[] = ["All", "Jenkins", "CI/CD", "Kubernetes", "Terraform", "Security", "AI & Automation", "Observability", "Embedded & IoT"];
 

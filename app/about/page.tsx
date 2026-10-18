@@ -5,7 +5,7 @@ import { PageHero } from "@/components/PageHero";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Sunu Mohan: Staff DevOps & AI Engineer with 13 years of experience in cloud platforms, Kubernetes, CI/CD, DevSecOps and AI-assisted automation.",
+  description: "Sunu Mohan: Staff DevOps & Cloud Engineer with 13 years of experience in cloud platforms, Kubernetes, CI/CD, DevSecOps and AI-assisted automation.",
   alternates: { canonical: "/about" },
 };
 

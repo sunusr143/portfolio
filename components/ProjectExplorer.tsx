@@ -60,6 +60,7 @@ export function ProjectExplorer({ limit }: { limit?: number }) {
                     </h3>
                     <p className="mt-2 text-mist-300">{p.tagline}</p>
                     <ul className="mt-3 flex flex-wrap gap-2" aria-label="Categories">
+                      {p.status && p.status !== "Production work" && <li className="chip !border-warn/50 !text-warn">{p.status}</li>}
                       {p.category.map((c) => <li key={c} className="chip">{c}</li>)}
                     </ul>
                     </div>
